@@ -1,9 +1,21 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navigation } from "@/components/navigation";
 import { HeroSection } from "@/components/hero-section";
 import { AgentsDashboard } from "@/components/agents-dashboard";
 import { FeaturesSection } from "@/components/features-section";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 const Index = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
   return (
     <div className="min-h-screen">
       <Navigation />

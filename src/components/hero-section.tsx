@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Brain, Users, Zap, ArrowDown } from "lucide-react"
+import { Brain, Users, Zap, ArrowDown, ArrowRight } from "lucide-react"
+import { useAuth } from "@/components/auth/AuthProvider"
 import heroImage from "@/assets/hero-ai-tutoring.jpg"
 
 export function HeroSection() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   return (
     <section className="relative overflow-hidden py-20 lg:py-32">
       {/* Background with gradient overlay */}
@@ -34,9 +38,15 @@ export function HeroSection() {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="xl" className="animate-pulse-glow">
+              <Button 
+                variant="hero" 
+                size="xl" 
+                className="animate-pulse-glow group"
+                onClick={() => navigate(user ? '/dashboard' : '/auth')}
+              >
                 <Brain className="h-5 w-5 mr-2" />
-                Start Learning
+                {user ? 'Go to Dashboard' : 'Start Learning'}
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-smooth" />
               </Button>
               <Button variant="outline" size="xl">
                 <Users className="h-5 w-5 mr-2" />
