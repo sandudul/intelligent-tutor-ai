@@ -14,7 +14,364 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      agent_communications: {
+        Row: {
+          created_at: string
+          from_agent: string
+          id: string
+          message_type: string
+          payload: Json
+          processed_at: string | null
+          session_id: string
+          status: string | null
+          to_agent: string
+        }
+        Insert: {
+          created_at?: string
+          from_agent: string
+          id?: string
+          message_type: string
+          payload: Json
+          processed_at?: string | null
+          session_id: string
+          status?: string | null
+          to_agent: string
+        }
+        Update: {
+          created_at?: string
+          from_agent?: string
+          id?: string
+          message_type?: string
+          payload?: Json
+          processed_at?: string | null
+          session_id?: string
+          status?: string | null
+          to_agent?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_communications_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "learning_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feedback: {
+        Row: {
+          agent_type: string
+          created_at: string
+          feedback_text: string
+          id: string
+          improvements: string[] | null
+          learning_path_recommendations: Json | null
+          next_steps: string[] | null
+          response_id: string
+          score: number | null
+          strengths: string[] | null
+          user_id: string
+        }
+        Insert: {
+          agent_type?: string
+          created_at?: string
+          feedback_text: string
+          id?: string
+          improvements?: string[] | null
+          learning_path_recommendations?: Json | null
+          next_steps?: string[] | null
+          response_id: string
+          score?: number | null
+          strengths?: string[] | null
+          user_id: string
+        }
+        Update: {
+          agent_type?: string
+          created_at?: string
+          feedback_text?: string
+          id?: string
+          improvements?: string[] | null
+          learning_path_recommendations?: Json | null
+          next_steps?: string[] | null
+          response_id?: string
+          score?: number | null
+          strengths?: string[] | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_response_id_fkey"
+            columns: ["response_id"]
+            isOneToOne: false
+            referencedRelation: "user_responses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      generated_content: {
+        Row: {
+          agent_type: string
+          content: string
+          content_type: string
+          created_at: string
+          difficulty_level: number | null
+          estimated_read_time: number | null
+          id: string
+          metadata: Json | null
+          session_id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          agent_type?: string
+          content: string
+          content_type: string
+          created_at?: string
+          difficulty_level?: number | null
+          estimated_read_time?: number | null
+          id?: string
+          metadata?: Json | null
+          session_id: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          agent_type?: string
+          content?: string
+          content_type?: string
+          created_at?: string
+          difficulty_level?: number | null
+          estimated_read_time?: number | null
+          id?: string
+          metadata?: Json | null
+          session_id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_content_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "learning_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      learning_sessions: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          objectives: string[] | null
+          progress: number | null
+          started_at: string | null
+          status: string | null
+          subject_id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          objectives?: string[] | null
+          progress?: number | null
+          started_at?: string | null
+          status?: string | null
+          subject_id: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          objectives?: string[] | null
+          progress?: number | null
+          started_at?: string | null
+          status?: string | null
+          subject_id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_sessions_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          learning_preferences: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          learning_preferences?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          learning_preferences?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      questions: {
+        Row: {
+          agent_type: string
+          correct_answer: string | null
+          created_at: string
+          difficulty_level: number | null
+          explanation: string | null
+          id: string
+          metadata: Json | null
+          options: Json | null
+          points: number | null
+          question_text: string
+          question_type: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          agent_type?: string
+          correct_answer?: string | null
+          created_at?: string
+          difficulty_level?: number | null
+          explanation?: string | null
+          id?: string
+          metadata?: Json | null
+          options?: Json | null
+          points?: number | null
+          question_text: string
+          question_type: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          agent_type?: string
+          correct_answer?: string | null
+          created_at?: string
+          difficulty_level?: number | null
+          explanation?: string | null
+          id?: string
+          metadata?: Json | null
+          options?: Json | null
+          points?: number | null
+          question_text?: string
+          question_type?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "learning_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subjects: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          difficulty_level: number | null
+          id: string
+          name: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty_level?: number | null
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty_level?: number | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      user_responses: {
+        Row: {
+          answer: string
+          id: string
+          is_correct: boolean | null
+          question_id: string
+          session_id: string
+          submitted_at: string
+          time_spent: number | null
+          user_id: string
+        }
+        Insert: {
+          answer: string
+          id?: string
+          is_correct?: boolean | null
+          question_id: string
+          session_id: string
+          submitted_at?: string
+          time_spent?: number | null
+          user_id: string
+        }
+        Update: {
+          answer?: string
+          id?: string
+          is_correct?: boolean | null
+          question_id?: string
+          session_id?: string
+          submitted_at?: string
+          time_spent?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_responses_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_responses_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "learning_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
