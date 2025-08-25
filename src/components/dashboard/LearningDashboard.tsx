@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -47,6 +48,7 @@ export const LearningDashboard = () => {
   const [showNewSession, setShowNewSession] = useState(false);
   const { user, session } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -299,6 +301,15 @@ export const LearningDashboard = () => {
                         <span className="font-medium">{session.progress}%</span>
                       </div>
                       <Progress value={session.progress} />
+                    </div>
+                    <div className="flex justify-end pt-4 border-t border-border/50">
+                      <Button 
+                        onClick={() => navigate(`/session/${session.id}`)}
+                        className="gap-2"
+                      >
+                        <Play className="h-4 w-4" />
+                        {session.progress > 0 ? 'Continue' : 'Start'} Session
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
